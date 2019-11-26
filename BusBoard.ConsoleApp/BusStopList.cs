@@ -37,12 +37,10 @@ public double lat { get; set; }
 public double lon { get; set; }
 }
     
-    public class RootObject2
+    public class BusStopResponse
 {
-public List<double> centrePoint { get; set; }
+
 public List<StopPoint> stopPoints { get; set; }
-public int pageSize { get; set; }
-public int total { get; set; }
-public int page { get; set; }
+
 }
 }

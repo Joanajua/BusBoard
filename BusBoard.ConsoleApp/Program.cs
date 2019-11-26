@@ -26,7 +26,8 @@ namespace BusBoard.ConsoleApp
             string code=null;
             string postCode = null;
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-            code = "490008660N";
+            
+            string code2= null;
             postCode = Console.ReadLine();
 
             var postCodeClient = new RestClient("http://api.postcodes.io/");
@@ -34,45 +35,69 @@ namespace BusBoard.ConsoleApp
             var postCodeResponse = postCodeClient.Get(postCodeRequest);
 
             string postCodeJson = postCodeResponse.Content.ToString();
+            var postCodeResult = JsonConvert.DeserializeObject<PostCodeResult>(postCodeJson);
+
+            string longitud = postCodeResult.result.longitude.ToString();
+            string latitud= postCodeResult.result.latitude.ToString();
 
             //TFL Api
             var tflClient = new RestClient("https://api.tfl.gov.uk/StopPoint");
+           
+            //TFL Bus Stop Codes for a specific post code 
+            var tflBusStopRequest = new RestRequest("?stopTypes=NaptanPublicBusCoachTram&radius=1000&lat=" + latitud + "&lon=" + longitud, DataFormat.Json);
+            var tflBusStopResponse = tflClient.Get(tflBusStopRequest);
+
+            string tflBusStopsJson = tflBusStopResponse.Content.ToString();
+            var tflBusStopResult = JsonConvert.DeserializeObject<BusStopResponse>(tflBusStopsJson);
+
+          
+           code = tflBusStopResult.stopPoints[0].naptanId;
+           code2 = tflBusStopResult.stopPoints[1].naptanId;
+
             //TFL Bus Times for a specific stop
             var tflBusTimeRequest = new RestRequest(code + "/Arrivals", DataFormat.Json);
             var tflBusTimeResponse = tflClient.Get(tflBusTimeRequest);
-            //TFL Bus Stop Codes for a specific post code 
-            var tflBusStopRequest = new RestRequest("?stopTypes=NaptanPublicBusCoachTram&radius=1000&lat=51.545029&lon=0.107808", DataFormat.Json);
-            var tflBusStopResponse = tflClient.Get(tflBusStopRequest);
 
             string tflBusTimeJson = tflBusTimeResponse.Content.ToString();
-            string tflBusStopsJson = tflBusStopResponse.Content.ToString();
 
 
-            int counter = 0;
 
+            //TFL Bus Times for a specific stop2
+            var tflBusTimeRequest2 = new RestRequest(code2 + "/Arrivals", DataFormat.Json);
+            var tflBusTimeResponse2 = tflClient.Get(tflBusTimeRequest2);
 
-            var tflBusStopResult = JsonConvert.DeserializeObject<RootObject2>(tflBusStopsJson);
-            var tflBusArrivalResult = JsonConvert.DeserializeObject<List<Bus>>(tflBusTimeJson);
-            var postCodeResult = JsonConvert.DeserializeObject<RootObject>(postCodeJson);
+            string tflBusTimeJson2 = tflBusTimeResponse2.Content.ToString();
 
-            List<Bus> orderedResult = tflBusArrivalResult.OrderBy(o => o.timeToStation).ToList();
 
           
-            
-                Console.Write("The Next next 5 busses are:");
-                foreach (var item in orderedResult)
-                {
-                    counter++;
-                    Console.WriteLine("bus No:" + item.lineId + " arriving in " + item.timeToStation + " seconds");
-                    if (counter == 6)
-                    {
-                    break;
-                    }
-                }
-            
-            //Console.WriteLine(response.Content);
 
-            Console.ReadLine();
+           
+            var tflBusArrivalResult = JsonConvert.DeserializeObject<List<Bus>>(tflBusTimeJson);
+            var tflBusArrivalResult2 = JsonConvert.DeserializeObject<List<Bus>>(tflBusTimeJson2);
+
+            List<Bus> orderedResult = tflBusArrivalResult.OrderBy(o => o.timeToStation).ToList();
+            List<Bus> orderedResult2 = tflBusArrivalResult2.OrderBy(o => o.timeToStation).ToList();
+
+            string busStopName = tflBusStopResult.stopPoints[0].commonName;
+
+
+            Console.Write("Your nearest bus stop is" + busStopName);
+            Console.Write("The Next Busses arriving are ");
+            for (int i = 0; i < orderedResult.Count(); i++)
+                {
+                    
+                    Console.WriteLine("bus No:" + orderedResult[i].lineId + " arriving in " + orderedResult[i].timeToStation + " seconds");
+                
+                }
+            for (int i = 0; i < orderedResult2.Count(); i++)
+            {
+
+                Console.WriteLine("bus No:" + orderedResult2[i].lineId + " arriving in " + orderedResult2[i].timeToStation + " seconds");
+
+
+            }                //Console.WriteLine(response.Content);
+
+                Console.ReadLine();
 
         }
 

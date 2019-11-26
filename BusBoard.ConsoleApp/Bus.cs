@@ -10,7 +10,7 @@ namespace BusBoard.ConsoleApp
     public class Bus
     {
         [JsonProperty(PropertyName = "lineId")]
-        public int lineId { get; set; }
+        public string lineId { get; set; }
         [JsonProperty(PropertyName = "timeToStation")]
         public int timeToStation { get; set; }
     }
