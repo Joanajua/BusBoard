@@ -1,16 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using BusBoard.ConsoleApp;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using RestSharp;
-using RestSharp.Authenticators;
-using BusBoard.Api;
 
 
 namespace BusBoard.Api
@@ -87,44 +79,6 @@ namespace BusBoard.Api
             stopLetter2 = tflBusStopResult.stopPoints[1].stopLetter;
         }
 
-        public void ShowResults(List<Bus>tflBusArrivalResult, List<Bus> tflBusArrivalResult2, List<Bus> orderedResult, List<Bus> orderedResult2) {
-            
-            Console.Write("Your nearest bus stop is " + busStopName + " Letter Code: " + stopLetter1 + " ");
 
-            Console.Write("The Next Busses arriving here are: ");
-            Console.WriteLine();
-            if (orderedResult.Count > 5)
-            {
-                loopCounter = 5;
-            }
-            else
-            {
-                loopCounter = orderedResult.Count();
-            }
-            for (int i = 0; i < loopCounter; i++)
-            {
-
-                Console.WriteLine("bus No: " + orderedResult[i].lineId + " arriving in " + orderedResult[i].timeToStation + " seconds");
-
-            }
-
-            Console.Write("Your Next nearest bus stop is " + busStopName + " Letter Code: " + stopLetter2 + " ");
-
-            Console.Write("The Next Busses arriving here are: ");
-            Console.WriteLine();
-            if (orderedResult2.Count >= 5)
-            {
-                loopCounter = 5;
-            }
-            else
-            {
-                loopCounter = orderedResult2.Count();
-            }
-            for (int i = 0; i < loopCounter; i++)
-            {
-
-                Console.WriteLine("bus No: " + orderedResult2[i].lineId + " arriving in " + orderedResult2[i].timeToStation + " seconds");
-            }
-        }
-    }
+}
 }
