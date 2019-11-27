@@ -50,6 +50,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\BusBoard.Api\APIManager.cs">
+      <Link>APIManager.cs</Link>
+    </Compile>
     <Compile Include="Bus.cs" />
     <Compile Include="BusStop.cs" />
     <Compile Include="BusStopList.cs" />
