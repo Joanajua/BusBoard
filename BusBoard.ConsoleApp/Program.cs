@@ -25,6 +25,7 @@ namespace BusBoard.ConsoleApp
 
             string code=null;
             string postCode = null;
+            int loopCounter = 0;
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             
             string code2= null;
@@ -81,18 +82,41 @@ namespace BusBoard.ConsoleApp
             string busStopName = tflBusStopResult.stopPoints[0].commonName;
 
 
-            Console.Write("Your nearest bus stop is" + busStopName);
-            Console.Write("The Next Busses arriving are ");
-            for (int i = 0; i < orderedResult.Count(); i++)
+            Console.Write("Your nearest bus stop is " + busStopName + " Letter Code: " + tflBusStopResult.stopPoints[0].stopLetter + " ");
+
+            Console.Write("The Next Busses arriving here are: ");
+            Console.WriteLine();
+            if (orderedResult.Count > 5)
+            {
+                loopCounter = 5;
+            }
+            else
+            {
+                loopCounter = orderedResult.Count();
+            }
+            for (int i = 0; i < loopCounter; i++)
                 {
                     
-                    Console.WriteLine("bus No:" + orderedResult[i].lineId + " arriving in " + orderedResult[i].timeToStation + " seconds");
+                    Console.WriteLine("bus No: " + orderedResult[i].lineId + " arriving in " + orderedResult[i].timeToStation + " seconds");
                 
                 }
-            for (int i = 0; i < orderedResult2.Count(); i++)
+
+            Console.Write("Your Next nearest bus stop is " + busStopName + " Letter Code: " + tflBusStopResult.stopPoints[1].stopLetter + " ");
+
+            Console.Write("The Next Busses arriving here are: ");
+            Console.WriteLine();
+            if (orderedResult2.Count >= 5)
+            {
+                loopCounter = 5;
+            }
+            else
+            {
+                loopCounter = orderedResult2.Count();
+            }
+            for (int i = 0; i < loopCounter; i++)
             {
 
-                Console.WriteLine("bus No:" + orderedResult2[i].lineId + " arriving in " + orderedResult2[i].timeToStation + " seconds");
+                Console.WriteLine("bus No: " + orderedResult2[i].lineId + " arriving in " + orderedResult2[i].timeToStation + " seconds");
 
 
             }                //Console.WriteLine(response.Content);
