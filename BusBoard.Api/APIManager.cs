@@ -10,18 +10,31 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RestSharp;
 using RestSharp.Authenticators;
+using BusBoard.Api;
 
 
 namespace BusBoard.Api
 {
     public class APIManager
     {
-        string code = null;
-        string postCode = null;
-        int loopCounter = 0;
-        string code2 = null;
+        public string code = null;
+        public string postCode = null;
+        public int loopCounter = 0;
+        public string code2 = null;
+        public string busStopName;
+        public string bustStopName2;
+        public string stopLetter1;
+        public string stopLetter2;
+        public List<Bus> tflBusArrivalResult = new List<Bus>();
+        public List<Bus> tflBusArrivalResult2 = new List<Bus>();
+        public List<Bus> orderedResult = new List<Bus>();
+        public List<Bus> orderedResult2 = new List<Bus>();
+
+
         public void GetLonAndLatByPostCode(string postCode)
         {
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+
             var postCodeClient = new RestClient("http://api.postcodes.io/");
             var postCodeRequest = new RestRequest("postcodes/" + postCode, DataFormat.Json);
             var postCodeResponse = postCodeClient.Get(postCodeRequest);
@@ -34,7 +47,7 @@ namespace BusBoard.Api
 
 
             //TFL Api
-            var tflClient = new RestClient("https://api.tfl.gov.uk/StopPoint");
+            var tflClient = new RestClient("https://api.tfl.gov.uk/StopPoint/?app_id=a392514e&app_key=f1fdf44292c0935a45c5a1893758af3e");
 
             //TFL Bus Stop Codes for a specific post code 
             var tflBusStopRequest = new RestRequest("?stopTypes=NaptanPublicBusCoachTram&radius=1000&lat=" + latitud + "&lon=" + longitud, DataFormat.Json);
@@ -66,11 +79,17 @@ namespace BusBoard.Api
             var tflBusArrivalResult = JsonConvert.DeserializeObject<List<Bus>>(tflBusTimeJson);
             var tflBusArrivalResult2 = JsonConvert.DeserializeObject<List<Bus>>(tflBusTimeJson2);
 
-            List<Bus> orderedResult = tflBusArrivalResult.OrderBy(o => o.timeToStation).ToList();
-            List<Bus> orderedResult2 = tflBusArrivalResult2.OrderBy(o => o.timeToStation).ToList();
+            orderedResult = tflBusArrivalResult.OrderBy(o => o.timeToStation).ToList();
+            orderedResult2 = tflBusArrivalResult2.OrderBy(o => o.timeToStation).ToList();
+            busStopName = tflBusStopResult.stopPoints[0].commonName;
+            bustStopName2 = tflBusStopResult.stopPoints[1].commonName;
+            stopLetter1 = tflBusStopResult.stopPoints[0].stopLetter;
+            stopLetter2 = tflBusStopResult.stopPoints[1].stopLetter;
+        }
 
-            string busStopName = tflBusStopResult.stopPoints[0].commonName;
-            Console.Write("Your nearest bus stop is " + busStopName + " Letter Code: " + tflBusStopResult.stopPoints[0].stopLetter + " ");
+        public void ShowResults(List<Bus>tflBusArrivalResult, List<Bus> tflBusArrivalResult2, List<Bus> orderedResult, List<Bus> orderedResult2) {
+            
+            Console.Write("Your nearest bus stop is " + busStopName + " Letter Code: " + stopLetter1 + " ");
 
             Console.Write("The Next Busses arriving here are: ");
             Console.WriteLine();
@@ -89,7 +108,7 @@ namespace BusBoard.Api
 
             }
 
-            Console.Write("Your Next nearest bus stop is " + busStopName + " Letter Code: " + tflBusStopResult.stopPoints[1].stopLetter + " ");
+            Console.Write("Your Next nearest bus stop is " + busStopName + " Letter Code: " + stopLetter2 + " ");
 
             Console.Write("The Next Busses arriving here are: ");
             Console.WriteLine();
