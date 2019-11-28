@@ -1,9 +1,21 @@
 ﻿@model BusBoard.Web.ViewModels.BusInfo
 @{
-	ViewBag.Title = "Bus Information";
+    ViewBag.Title = "Bus Information";
 }
 
-<h2>@Model.Title</h2>
+<style>
+    td {
+        border-left: 1px groove;
+        border-top: 1px groove;
+        border-color: #024EA3;
+    }
+
+    table {
+        border-right: 1px groove;
+        border-bottom: 1px groove;
+        border-color: #024EA3;
+    }
+</style>
 
 <div class="row">
     @if (Model.isInLondon == false)
@@ -14,10 +26,16 @@
     }
     else
     {
+        <div class="jumbotron">
 
-        <p>You entered postcode @Model.PostCode</p>
+            <h1 style=" display:inline-flex ; color:#024EA3"><img src="http://londonroadsafetycouncil.org.uk/wp-content/uploads/2016/05/TfL-logo.png" alt="TFLLogo" style="width:200px;height:60px;"> BusBoard</h1>
+            <p class="lead">You entered postcode <strong>@Model.PostCode.ToUpper()</strong></p>
+        </div>
+
         <p>
-            Your nearest 2 bust stops:
+            <strong>
+                Your nearest 2 bus stops:
+            </strong>
         </p>
 
         <p>@Model.BusStopName1 </p>
@@ -27,7 +45,7 @@
                     <td>
                         Bus Number
                     </td>
-                    <td></td>
+                    
                     <td>
                         Seconds until Arrival
                     </td>
@@ -40,7 +58,7 @@
                         @Model.orderedResult[0].lineId
                     }
                 </td>
-                <td></td>
+                
                 <td>
                     @if (Model.orderedResult.Count >= 1)
                     {
@@ -55,7 +73,7 @@
                         @Model.orderedResult[1].lineId
                     }
                 </td>
-                <td></td>
+                
                 <td>
                     @if (Model.orderedResult.Count >= 2)
                     {
@@ -72,7 +90,7 @@
                     }
 
                 </td>
-                <td></td>
+                
                 <td>
                     @if (Model.orderedResult.Count >= 3)
                     {
@@ -87,7 +105,7 @@
                         @Model.orderedResult[3].lineId
                     }
                 </td>
-                <td></td>
+                
                 <td>
                     @if (Model.orderedResult.Count >= 4)
                     {
@@ -102,7 +120,7 @@
                         @Model.orderedResult[4].lineId
                     }
                 </td>
-                <td></td>
+                
                 <td>
                     @if (Model.orderedResult.Count >= 5)
                     {
@@ -122,7 +140,7 @@
                     <td>
                         Bus Number
                     </td>
-                    <td></td>
+                    
                     <td>
                         Seconds until Arrival
                     </td>
@@ -135,7 +153,7 @@
                         @Model.orderedResult2[0].lineId
                     }
                 </td>
-                <td></td>
+                
                 <td>
                     @if (Model.orderedResult2.Count >= 1)
                     {
@@ -150,7 +168,7 @@
                         @Model.orderedResult2[1].lineId
                     }
                 </td>
-                <td></td>
+                
                 <td>
                     @if (Model.orderedResult2.Count >= 2)
                     {
@@ -165,7 +183,7 @@
                         @Model.orderedResult2[2].lineId
                     }
                 </td>
-                <td></td>
+                
                 <td>
                     @if (Model.orderedResult2.Count >= 3)
                     {
@@ -180,7 +198,7 @@
                         @Model.orderedResult2[3].lineId
                     }
                 </td>
-                <td></td>
+                
                 <td>
                     @if (Model.orderedResult2.Count >= 4)
                     {
@@ -195,7 +213,7 @@
                         @Model.orderedResult2[4].lineId
                     }
                 </td>
-                <td></td>
+                
                 <td>
                     @if (Model.orderedResult2.Count >= 5)
                     {
