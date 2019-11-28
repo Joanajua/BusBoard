@@ -14,7 +14,7 @@ namespace BusBoard.Web.ViewModels
         public string Title { get; set; }
         public string BusStopName1 { get; set; }
         public string BusStopName2 { get; set; }
-
+        public bool isInLondon = false;
 
         public List<Bus> orderedResult = new List<Bus>();
         public List<Bus> orderedResult2 = new List<Bus>();

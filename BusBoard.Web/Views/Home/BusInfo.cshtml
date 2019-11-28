@@ -6,182 +6,204 @@
 <h2>@Model.Title</h2>
 
 <div class="row">
-	<p>You entered postcode @Model.PostCode</p>
-	<p>
-		Your nearest 2 bust stops:
-	</p>
+    @if (Model.isInLondon == false)
+    {
+        <p>Your Post Code does not have any tfl bus stops within 1000m, please try again</p>
 
-	<p>@Model.BusStopName1 </p>
-	<table>
-		<thead>
-			<tr>
-				<td>
-					Bus Number
-				</td>
-				<td>
-					Seconds until Arrival
-				</td>
-			</tr>
-		</thead>
-		<tr>
-			<td>
-				@if (Model.orderedResult.Count >= 1)
-				{
-					@Model.orderedResult[0].lineId
-				}
-			</td>
-			<td>
-				@if (Model.orderedResult.Count >= 1)
-				{
-					@Model.orderedResult[0].timeToStation
-				}
-				</td>
-		</tr>
-		<tr>
-			<td>
-				@if (Model.orderedResult.Count >= 2)
-				{
-					@Model.orderedResult[1].lineId
-				}
-			</td>
-			<td>
-				@if (Model.orderedResult.Count >= 2)
-				{
-					@Model.orderedResult[1].timeToStation
-				}
-			</td>
-		</tr>
-		<tr>
-			<td>
 
-				@if (Model.orderedResult.Count >= 3)
-				{
-					@Model.orderedResult[2].lineId
-				}
+    }
+    else
+    {
 
-			</td>
-			<td>
-				@if (Model.orderedResult.Count >= 3)
-				{
-					@Model.orderedResult[2].timeToStation
-				}
-			</td>
-		</tr>
-		<tr>
-			<td>
-				@if (Model.orderedResult.Count >= 4)
-				{
-					@Model.orderedResult[3].lineId
-				}
-			</td>
-			<td>
-				@if (Model.orderedResult.Count >= 4)
-				{
-					@Model.orderedResult[3].timeToStation
-				}
-			</td>
-		</tr>
-		<tr>
-			<td>
-				@if (Model.orderedResult.Count >= 5)
-				{
-					@Model.orderedResult[4].lineId
-				}
-			</td>
-			<td>
-				@if (Model.orderedResult.Count >= 5)
-				{
-					@Model.orderedResult[4].timeToStation
-				}
-			</td>
-		</tr>
-	</table>
+        <p>You entered postcode @Model.PostCode</p>
+        <p>
+            Your nearest 2 bust stops:
+        </p>
 
-	<br />
-	<br />
+        <p>@Model.BusStopName1 </p>
+        <table>
+            <thead>
+                <tr>
+                    <td>
+                        Bus Number
+                    </td>
+                    <td></td>
+                    <td>
+                        Seconds until Arrival
+                    </td>
+                </tr>
+            </thead>
+            <tr>
+                <td>
+                    @if (Model.orderedResult.Count >= 1)
+                    {
+                        @Model.orderedResult[0].lineId
+                    }
+                </td>
+                <td></td>
+                <td>
+                    @if (Model.orderedResult.Count >= 1)
+                    {
+                        @Model.orderedResult[0].timeToStation
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @if (Model.orderedResult.Count >= 2)
+                    {
+                        @Model.orderedResult[1].lineId
+                    }
+                </td>
+                <td></td>
+                <td>
+                    @if (Model.orderedResult.Count >= 2)
+                    {
+                        @Model.orderedResult[1].timeToStation
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>
 
-	<p>@Model.BusStopName2 </p>
-	<table>
-		<thead>
-			<tr>
-				<td>
-					Bus Number
-				</td>
-				<td>
-					Seconds until Arrival
-				</td>
-			</tr>
-		</thead>
-		<tr>
-			<td>
-				@if (Model.orderedResult2.Count >= 1)
-				{
-					@Model.orderedResult2[0].lineId
-				}
-			</td>
-			<td>
-				@if (Model.orderedResult2.Count >= 1)
-				{
-					@Model.orderedResult2[0].timeToStation
-				}
-			</td>
-		</tr>
-		<tr>
-			<td>
-				@if (Model.orderedResult2.Count >= 2)
-				{
-					@Model.orderedResult2[1].lineId
-				}
-			</td>
-			<td>
-				@if (Model.orderedResult2.Count >= 2)
-				{
-					@Model.orderedResult2[1].timeToStation
-				}
-			</td>
-		</tr>
-		<tr>
-			<td>
-				@if (Model.orderedResult2.Count >= 3)
-				{
-					@Model.orderedResult2[2].lineId
-				}
-			</td>
-			<td>
-				@if (Model.orderedResult2.Count >= 3)
-				{
-					@Model.orderedResult2[2].timeToStation
-				}
-			</td>
-		</tr>
-		<tr>
-			<td>
-				@if (Model.orderedResult2.Count >= 4)
-				{
-					@Model.orderedResult2[3].lineId
-				}
-			</td>
-			<td>
-				@if (Model.orderedResult2.Count >= 4)
-				{
-					@Model.orderedResult2[3].timeToStation
-				}
-			</td>
-		</tr>
-		<tr>
-			<td>
-				@if (Model.orderedResult2.Count >= 5)
-				{
-					@Model.orderedResult2[4].lineId
-				}
-			</td>
-			<td>
-				@if (Model.orderedResult2.Count >= 5)
-				{
-					@Model.orderedResult2[4].timeToStation
-				}
-			</td>
-		</tr>
-		
-	</table>
+                    @if (Model.orderedResult.Count >= 3)
+                    {
+                        @Model.orderedResult[2].lineId
+                    }
+
+                </td>
+                <td></td>
+                <td>
+                    @if (Model.orderedResult.Count >= 3)
+                    {
+                        @Model.orderedResult[2].timeToStation
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @if (Model.orderedResult.Count >= 4)
+                    {
+                        @Model.orderedResult[3].lineId
+                    }
+                </td>
+                <td></td>
+                <td>
+                    @if (Model.orderedResult.Count >= 4)
+                    {
+                        @Model.orderedResult[3].timeToStation
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @if (Model.orderedResult.Count >= 5)
+                    {
+                        @Model.orderedResult[4].lineId
+                    }
+                </td>
+                <td></td>
+                <td>
+                    @if (Model.orderedResult.Count >= 5)
+                    {
+                        @Model.orderedResult[4].timeToStation
+                    }
+                </td>
+            </tr>
+        </table>
+
+        <br />
+        <br />
+
+        <p>@Model.BusStopName2 </p>
+        <table>
+            <thead>
+                <tr>
+                    <td>
+                        Bus Number
+                    </td>
+                    <td></td>
+                    <td>
+                        Seconds until Arrival
+                    </td>
+                </tr>
+            </thead>
+            <tr>
+                <td>
+                    @if (Model.orderedResult2.Count >= 1)
+                    {
+                        @Model.orderedResult2[0].lineId
+                    }
+                </td>
+                <td></td>
+                <td>
+                    @if (Model.orderedResult2.Count >= 1)
+                    {
+                        @Model.orderedResult2[0].timeToStation
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @if (Model.orderedResult2.Count >= 2)
+                    {
+                        @Model.orderedResult2[1].lineId
+                    }
+                </td>
+                <td></td>
+                <td>
+                    @if (Model.orderedResult2.Count >= 2)
+                    {
+                        @Model.orderedResult2[1].timeToStation
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @if (Model.orderedResult2.Count >= 3)
+                    {
+                        @Model.orderedResult2[2].lineId
+                    }
+                </td>
+                <td></td>
+                <td>
+                    @if (Model.orderedResult2.Count >= 3)
+                    {
+                        @Model.orderedResult2[2].timeToStation
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @if (Model.orderedResult2.Count >= 4)
+                    {
+                        @Model.orderedResult2[3].lineId
+                    }
+                </td>
+                <td></td>
+                <td>
+                    @if (Model.orderedResult2.Count >= 4)
+                    {
+                        @Model.orderedResult2[3].timeToStation
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @if (Model.orderedResult2.Count >= 5)
+                    {
+                        @Model.orderedResult2[4].lineId
+                    }
+                </td>
+                <td></td>
+                <td>
+                    @if (Model.orderedResult2.Count >= 5)
+                    {
+                        @Model.orderedResult2[4].timeToStation
+                    }
+                </td>
+            </tr>
+
+        </table>
+    }
 </div>
